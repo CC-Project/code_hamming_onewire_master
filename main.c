@@ -49,8 +49,14 @@ int main(void)
     // Remainder
     if(remainder != 0)
     {
+        // Void other data than remainder
+        for(uint8_t j = remainder + 1; j < K; j++)
+            matrix_set(data_loaded, j, 1, 0);
+
+        // Encode
         struct Matrix* data_encoded = hamming_encode(data_loaded, hamming_config);
 
+        // Send by one_wire
         for(uint8_t p = 0; p < N; p++)
             ow_write_bit(matrix_get(data_encoded, p + 1, 1));
 
